@@ -1,21 +1,30 @@
-import NextAuth from "next-auth"
+import NextAuth from "next-auth";
 
 export const authOptions = {
-  providers: [{
-      id: 'bj',
-      name: 'Bj',
-      type: 'oauth',
-      authorization: 'Bearer tiL4YmZDXsI50SKcyKvjh44SNxbGC-NSRByqfUuvFOc',
+  providers: [
+    {
+      id: "bj",
+      name: "BJ",
+      type: "oauth",
+      authorization: "http://api.lvh.me:3000/oauth/authorize",
+      token: "http://api.lvh.me:3000/oauth/token/info",
       clientId: process.env.BJ_CLIENT_ID,
       clientSecret: process.env.BJ_CLIENT_SECRET,
-      profile(profile) {
-        console.log('profile ', profile)
-        return {
-          id: profile.id,
-          name: profile?.name,
-        }
-      },
     },
   ],
-}
-export default NextAuth(authOptions)
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+    async session({ session, token, user }) {
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return token;
+    },
+  },
+};
+export default NextAuth(authOptions);

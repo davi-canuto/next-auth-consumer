@@ -6,7 +6,7 @@ export const authOptions = {
       id: "bj",
       name: "BJ",
       type: "oauth",
-      authorization: "http://api.lvh.me:3000/oauth/authorize",
+      authorization: "http://bjid.lvh.me:3001/oauth/authorize",
       token: "http://api.lvh.me:3000/oauth/token/info",
       clientId: process.env.BJ_CLIENT_ID,
       clientSecret: process.env.BJ_CLIENT_SECRET,
